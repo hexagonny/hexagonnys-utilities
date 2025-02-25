@@ -24,20 +24,23 @@ namespace hUtils {
     // --- TEXT UTILITIES ---
     namespace Text
     {
-        void toLine            (char character = '-');                   //  Print a line of repeated characters
-        void toCentered        (std::string text, bool numbered = false, //  Prints centered text.
-                                int colorCode = 0, bool isBold = false);      
-        void toRight           (std::string text, int colorCode = 0,     //  Moves text to the right.
-                                bool isBold = false);  
-        void toLeft            (std::string text, int tab = 0,
-                                int colorCode = 0, bool isBold = false); //  Moves text to the left.
-        std::string toLowerCase(std::string text);                       //  Convert string to lowercase.
+        void toLine            (char character = '-');     //  Print a line of repeated characters
+        void toCentered        (std::string text,          //  Prints centered text.
+                                int colorCode = 0,
+                                int number = 0);      
+        void toRight           (std::string text,          //  Moves text to the right.
+                                int colorCode = 0);  
+        void toLeft            (std::string text,          //  Moves text to the left.
+                                int tab = 0,
+                                int colorCode = 0,
+                                int number = 0);
+        std::string toLowerCase(std::string text);         //  Convert string to lowercase.
 
-        std::string color      (int textColor, bool isBold = false);     //  Get ANSI color codes.
-        std::string defaultText();                                       //  Reset text color.
+        std::string color      (int textColor = 0);        //  Get ANSI color codes.
+        std::string defaultText();                         //  Reset text color.
 
-        void clearAll();                                                 //  Clears every output in the terminal.
-        void clearLine         (int line);                               //  Clears an assigned line and below it.
+        void clearAll();                                   //  Clears every output in the terminal.
+        void clearLine         (int line);                 //  Clears an assigned line and below it.
     };
 }
 

@@ -1,4 +1,5 @@
 #include "hutils.h"
+#include "menu_templates.h"
 
 #include <iostream>
 
@@ -21,8 +22,27 @@ int main(){
 
     std::cout << color(92) + "This is bright green (92)\n" + defaultText();
     std::cout << color(32) + "This is not bright but green (32)\n" + defaultText();
-    std::cout << color(32, true) + "This is not bright but green and in bold (32, true)" + defaultText();
     
+    hUtils::pause();
+
+    int option;
+    bool stay = true;
+
+    while(stay){
+        hUtils::Text::clearAll();
+        std::cout << "Pick a menu (1/2/3): "; std::cin >> option;
+
+        switch(option){
+            case 1: infoMenu(); break;
+            case 2: itemPaginatedMenu(); break;
+            case 3: itemListMenu(); break;
+            case 4: stay = false; break;
+            default: std::cout << "Incorrect value.";
+        };
+
+        hUtils::pause();
+    }
+
     hUtils::pause();
 
     return 0;

@@ -50,8 +50,8 @@ namespace hUtils {
 
     void pause()
     {
-        cout << "\nPress enter to continue . . .\n";
-        std::cin.ignore();
+        cout << "\nPress enter to continue . . .";
+        std::cin.clear(); fflush(stdin); std::cin.ignore();
     }
 
     void sleep(int miliseconds)

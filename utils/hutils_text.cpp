@@ -19,37 +19,40 @@ namespace hUtils {
             cout << string(SCREEN_WIDTH, character) << '\n';
         }
 
-        void toCentered(string text, bool numbered, int colorCode, bool isBold)
+        void toCentered(string text, int colorCode, int number)
         {
             int appliedScreenWidth = SCREEN_WIDTH;
             int padding = (appliedScreenWidth - text.length()) / 2;
             if(padding < 0) padding = 0;
-            
-            if(numbered){
-                static int count = 1;
-                text = std::to_string(count++) + ". " + text;
+
+            if(number >= 1){
+                text = std::to_string(number) + ". " + text;
             }
 
-            cout<<color(colorCode, isBold)
+            cout<<color(colorCode)
                 <<std::setw(padding + text.length())<<text<<'\n'
                 <<defaultText();
         }
 
-        void toRight(string text, int colorCode, bool isBold)
+        void toRight(string text, int colorCode)
         {
-            cout<<color(colorCode, isBold)
+            cout<<color(colorCode)
                 <<std::setw(SCREEN_WIDTH)<<text<<'\n'
                 <<defaultText();
         }
 
-        void toLeft(string text, int tab, int colorCode, bool isBold)
+        void toLeft(string text, int tab, int colorCode, int number)
         {
-            cout<<color(colorCode, isBold);
+            cout<<color(colorCode);
             
             if(tab >= 1){
                 for(int i = 1; i <= tab; ++i){
                     cout<<'\t';
                 }
+            }
+
+            if(number >= 1){
+                text = std::to_string(number) + ". " + text;
             }
 
             cout<<text<<'\n'
@@ -62,10 +65,10 @@ namespace hUtils {
             return text;
         }
 
-        string color(int textColor, bool isBold)
+        string color(int textColor)
         {
             if((textColor >= 30 && textColor <= 37) || (textColor >= 90 && textColor <= 97)){
-                return "\033[" + string(isBold ? "1;" : "") + std::to_string(textColor) + "m";
+                return "\033[" + std::to_string(textColor) + "m";
             }
             return "";
         }
