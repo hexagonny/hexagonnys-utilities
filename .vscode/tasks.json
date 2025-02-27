@@ -6,7 +6,7 @@
             "command": "C:\\msys64\\mingw64\\bin\\g++.exe",
             "args": [
                 "${workspaceFolder}\\src\\*.cpp",
-                "${workspaceFolder}\\utils\\*.cpp",
+                "${workspaceFolder}\\src\\utils\\*.cpp",
                 "-I", "${workspaceFolder}\\include",
                 "-o", "${workspaceFolder}\\build\\example.exe"
             ],

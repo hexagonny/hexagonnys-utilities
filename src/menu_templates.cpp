@@ -9,7 +9,7 @@ struct Humanoid {
     std::string name = "hexagonny";
     std::string charClass = "Thief";
     char rank = 'D';
-    std::vector<std::string> items = {"Empty Flask", "Rusty Dagger", "Worthless stick"
+    std::vector<std::string> items = {"Empty Flask", "Rusty Dagger", "Worthless stick",
                                       "Sword", "Shield", "Health Potion", "Bow", "Arrow",
                                       "Magic Scroll", "Helmet", "Armor", "Boots", "Ring",
                                       "Torch", "Rope", "Pickaxe", "Mana Potion"};

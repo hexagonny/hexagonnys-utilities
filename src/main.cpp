@@ -11,8 +11,8 @@ int main(){
     hUtils::setConsoleWindowSize(); hUtils::Text::clearAll();
     
     toCentered("The hell. This window is paused and resized.");
-    toCentered("This is a list.", true, 34);
-    toCentered("Item two.", true, 35);
+    toCentered("This is a list.", 34, 1);
+    toCentered("Item two.", 35, 2);
     toRight("Yo, Im right.");
     toLeft("Hey, Im left.");
     toLeft("I have an indent.", 1);

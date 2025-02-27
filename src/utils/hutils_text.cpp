@@ -12,7 +12,7 @@ using std::string;
 
 namespace hUtils {
 
-    namespace Text{
+    namespace Text {
 
         void toLine(char character)
         {
