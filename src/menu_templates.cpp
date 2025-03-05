@@ -71,5 +71,45 @@ void infoMenu(){
            "Class: " + player.charClass + '\n' +
            "Rank: "  + player.rank              );
     toLine();
+}
 
+void nestedMenus(){
+    char choice;
+    bool stay = true;
+
+    while(stay){
+        hUtils::Text::clearAll();
+        toLine();
+
+        toCentered("Main Menu", 93);
+        toCentered("[C] Character Sheet | [I] Inventory | [U] Use Item | [E] Exit");
+        std::cout << color(93) + "\nPick a menu: " + defaultText();
+        std::cin >> choice;
+        choice = tolower(choice);
+
+        switch(choice){
+            case 'c': infoMenu(); break;
+            case 'i': itemPaginatedMenu(); break;
+            case 'u': itemListMenu(); break;
+            case 'e': stay = false; break;
+            default: continue;
+        };
+
+        hUtils::pause();
+    }
+}
+
+void tableMenu(){
+    toLeft("   Character Skill Sheet:", {}, 93);
+    toLine();
+    table.setElements(
+        "Spells", "Skills", "Status",
+        color(31) + "Fire Ball" + defaultText(),
+        color(34) + "Destruction" + defaultText(),
+        color(32) + "Poisoned" + defaultText()
+    );
+    table.toColumn("left", 15, 3);
+    toLine();
+
+    hUtils::pause();
 }

@@ -12,10 +12,13 @@
 #endif
 
 #include <string>
+#include <vector>
+#include <sstream>
+#include <regex>
 
 #ifndef HUTIL_API
 #define HUTIL_API
-#endif
+#endif  
 
 namespace hUtils {
 
@@ -41,16 +44,47 @@ namespace hUtils {
 
         HUTIL_API std::string color      (int textColor = 0);    //  Get ANSI color codes.
         HUTIL_API std::string defaultText();                     //  Reset text color.
-        HUTIL_API void clearAll();                               //  Clears every output in the terminal.
+        HUTIL_API void clearAll          ();                     //  Clears every output in the terminal.
         HUTIL_API void clearLine         (int line);             //  Clears an assigned line and below it.
     };
 }
 
+struct Table {
+private:
+    std::vector<std::string> elements;
+
+    std::string stripAnsi(const std::string& text) const
+    {
+        return std::regex_replace(text, std::regex("\033\\[[0-9;]*m"), "");
+    }
+    int calculateMaxWidth() const;
+
+    template <typename T>
+    std::string toString(const T& value)
+    {
+        std::ostringstream oss;
+        oss << value;
+        return oss.str();
+    }
+
+public:
+    template <typename... Args>
+    HUTIL_API void setElements(Args... args)
+    {
+        elements.clear();
+        (elements.push_back(toString(args)), ...);
+    }
+    HUTIL_API void toColumn   (std::string orientation = "left",
+                               int givenWidth = 0,
+                               int numberOfColumns = 2);
+};
+
 // --- LOGGER UTILITIES ---
-struct Logger
-{
+struct Logger {
+private:
     int filesMoved = 0, foldersRemoved = 0, foldersCreated = 0, errors = 0, warnings = 0;
 
+public:
     HUTIL_API void logAction     (const std::string& message);
     HUTIL_API void logSuccess    (const std::string& message);
     HUTIL_API void logMoved      (const std::string& message); //  filesMoved
@@ -61,6 +95,7 @@ struct Logger
     HUTIL_API void displaySummary();
 };
 
+extern Table  table;
 extern Logger logger;
 
 #endif

@@ -25,23 +25,11 @@ int main(){
     
     hUtils::pause();
 
-    int option;
-    bool stay = true;
+    nestedMenus();
 
-    while(stay){
-        hUtils::Text::clearAll();
-        std::cout << "Pick a menu (1/2/3): "; std::cin >> option;
+    hUtils::Text::clearAll();
 
-        switch(option){
-            case 1: infoMenu(); break;
-            case 2: itemPaginatedMenu(); break;
-            case 3: itemListMenu(); break;
-            case 4: stay = false; break;
-            default: std::cout << "Incorrect value.";
-        };
-
-        hUtils::pause();
-    }
+    tableMenu();
 
     hUtils::pause();
 

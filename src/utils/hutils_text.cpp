@@ -29,21 +29,21 @@ namespace hUtils {
                 text = std::to_string(number) + ". " + text;
             }
 
-            cout<<color(colorCode)
-                <<std::setw(padding + text.length())<<text<<'\n'
-                <<defaultText();
+            cout << color(colorCode)
+                 << std::setw(padding + text.length())<<text<<'\n'
+                 << defaultText();
         }
 
         void toRight(string text, int colorCode)
         {
-            cout<<color(colorCode)
-                <<std::setw(SCREEN_WIDTH)<<text<<'\n'
-                <<defaultText();
+            cout << color(colorCode)
+                 << std::setw(SCREEN_WIDTH)<<text<<'\n'
+                 << defaultText();
         }
 
         void toLeft(string text, int tab, int colorCode, int number)
         {
-            cout<<color(colorCode);
+            cout << color(colorCode);
             
             if(tab >= 1){
                 for(int i = 1; i <= tab; ++i){
@@ -93,5 +93,4 @@ namespace hUtils {
             cout<<"\033[J";
         }
     }
-
 }

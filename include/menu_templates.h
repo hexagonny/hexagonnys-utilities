@@ -4,5 +4,7 @@
 void itemListMenu();
 void itemPaginatedMenu();
 void infoMenu();
+void nestedMenus();
+void tableMenu();
 
 #endif
