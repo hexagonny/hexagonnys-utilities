@@ -4,49 +4,51 @@
 #include <iomanip>
 #include <algorithm>
 
-Table table;
+namespace hUtils {
+    Table table;
 
-int Table::calculateMaxWidth() const
-{
-    int width = 0;
-    for (const auto& element : elements) {
-        std::string visible = stripAnsi(element);
-        width = (std::max)(width, static_cast<int>(visible.length()));
-    }
-    return width;
-}
-
-void Table::toColumn(std::string orientation, int givenWidth, int numberOfColumns)
-{
-    if(elements.empty()){
-        std::cerr << "No elements to display.\n";
-        return;
+    int Table::calculateMaxWidth() const
+    {
+        int width = 0;
+        for (const auto& element : elements) {
+            std::string visible = stripAnsi(element);
+            width = (std::max)(width, static_cast<int>(visible.length()));
+        }
+        return width;
     }
 
-    orientation = hUtils::Text::toLowerCase(orientation);
+    void Table::toColumn(std::string orientation, int givenWidth, int numberOfColumns)
+    {
+        if(elements.empty()){
+            std::cerr << "No elements to display.\n";
+            return;
+        }
 
-    int maxWidth = calculateMaxWidth();
-    int finalWidth = (givenWidth != 0) ? (std::max)(givenWidth - 1, maxWidth) : maxWidth;
+        orientation = hUtils::text.toLowerCase(orientation);
 
-    int rows = (elements.size() + numberOfColumns - 1) / numberOfColumns;
-    for(int i = 0; i < rows; ++i){
-        for(int j = 0; j < numberOfColumns; ++j){
-            int index = j + i * numberOfColumns;
+        int maxWidth = calculateMaxWidth();
+        int finalWidth = (givenWidth != 0) ? (std::max)(givenWidth - 1, maxWidth) : maxWidth;
 
-            if(index < static_cast<int>(elements.size())){
-                std::string visible = stripAnsi(elements[index]);
-                int padding = finalWidth - visible.length();
+        int rows = (elements.size() + numberOfColumns - 1) / numberOfColumns;
+        for(int i = 0; i < rows; ++i){
+            for(int j = 0; j < numberOfColumns; ++j){
+                int index = j + i * numberOfColumns;
 
-                if(orientation == "right"){
-                    std::cout << std::setw(padding) << " ";
-                    std::cout << elements[index];
-                }
-                else{
-                    std::cout << elements[index];
-                    std::cout << std::setw(padding) << " ";
+                if(index < static_cast<int>(elements.size())){
+                    std::string visible = stripAnsi(elements[index]);
+                    int padding = finalWidth - visible.length();
+
+                    if(orientation == "right"){
+                        std::cout << std::setw(padding) << " ";
+                        std::cout << elements[index];
+                    }
+                    else{
+                        std::cout << elements[index];
+                        std::cout << std::setw(padding) << " ";
+                    }
                 }
             }
+            std::cout << '\n';
         }
-        std::cout << '\n';
     }
 }

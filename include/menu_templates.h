@@ -6,5 +6,6 @@ void itemPaginatedMenu();
 void infoMenu();
 void nestedMenus();
 void tableMenu();
+void progressBar(bool increasing);
 
 #endif

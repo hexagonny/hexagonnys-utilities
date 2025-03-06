@@ -4,34 +4,42 @@
 #include <iostream>
 
 //  You can use "using namespace" to shorten code.
-using namespace hUtils::Text;  /* Best use for "using" is putting them
-                                 inside of source files. */
+using namespace hUtils;  /* Best use for "using" is putting them
+                         inside of source files. */
 
 int main(){
-    hUtils::setConsoleWindowSize(); hUtils::Text::clearAll();
+    setConsoleWindowSize(); text.clearAll();
     
-    toCentered("The hell. This window is paused and resized.");
-    toCentered("This is a list.", 34, 1);
-    toCentered("Item two.", 35, 2);
-    toRight("Yo, Im right.");
-    toLeft("Hey, Im left.");
-    toLeft("I have an indent.", 1);
-    toLeft("And I have a deeper indent", 2);
+    text.toCentered("The hell. This window is paused and resized.");
+    text.toCentered("This is a list.", 34, 1);
+    text.toCentered("Item two.", 35, 2);
+    text.toRight("Yo, Im right.");
+    text.toLeft("Hey, Im left.");
+    text.toLeft("I have an indent.", 1);
+    text.toLeft("And I have a deeper indent", 2);
 
-    hUtils::pause(); hUtils::Text::clearAll();
+    pause(); text.clearAll();
 
-    std::cout << color(92) + "This is bright green (92)\n" + defaultText();
-    std::cout << color(32) + "This is not bright but green (32)\n" + defaultText();
+    std::cout << text.color(92) + "This is bright green (92)\n"         + text.defaultText();
+    std::cout << text.color(32) + "This is not bright but green (32)\n" + text.defaultText();
     
-    hUtils::pause();
+    pause();
 
     nestedMenus();
 
-    hUtils::Text::clearAll();
+    text.clearAll();
 
     tableMenu();
 
-    hUtils::pause();
+    pause(); text.clearAll();
+
+    progressBar(true);
+
+    pause(); text.clearAll();
+
+    progressBar(false);
+
+    pause();
 
     return 0;
 }

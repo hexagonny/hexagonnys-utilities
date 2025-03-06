@@ -12,85 +12,91 @@ using std::string;
 
 namespace hUtils {
 
-    namespace Text {
+    Text text;
 
-        void toLine(char character)
-        {
-            cout << string(SCREEN_WIDTH, character) << '\n';
+    std::string Text::toStr(double value, int precision)
+    {
+        std::ostringstream out;
+        out << std::fixed << std::setprecision(precision) << value;
+        return out.str();
+    }
+
+    void Text::toLine(char character)
+    {
+        cout << string(SCREEN_WIDTH, character) << '\n';
+    }
+
+    void Text::toCentered(string text, int colorCode, int number)
+    {
+        int appliedScreenWidth = SCREEN_WIDTH;
+        int padding = (appliedScreenWidth - text.length()) / 2;
+        if(padding < 0) padding = 0;
+
+        if(number >= 1){
+            text = std::to_string(number) + ". " + text;
         }
 
-        void toCentered(string text, int colorCode, int number)
-        {
-            int appliedScreenWidth = SCREEN_WIDTH;
-            int padding = (appliedScreenWidth - text.length()) / 2;
-            if(padding < 0) padding = 0;
+        cout << color(colorCode)
+                << std::setw(padding + text.length())<<text<<'\n'
+                << defaultText();
+    }
 
-            if(number >= 1){
-                text = std::to_string(number) + ". " + text;
+    void Text::toRight(string text, int colorCode)
+    {
+        cout << color(colorCode)
+                << std::setw(SCREEN_WIDTH)<<text<<'\n'
+                << defaultText();
+    }
+
+    void Text::toLeft(string text, int tab, int colorCode, int number)
+    {
+        cout << color(colorCode);
+        
+        if(tab >= 1){
+            for(int i = 1; i <= tab; ++i){
+                cout<<'\t';
             }
-
-            cout << color(colorCode)
-                 << std::setw(padding + text.length())<<text<<'\n'
-                 << defaultText();
         }
 
-        void toRight(string text, int colorCode)
-        {
-            cout << color(colorCode)
-                 << std::setw(SCREEN_WIDTH)<<text<<'\n'
-                 << defaultText();
+        if(number >= 1){
+            text = std::to_string(number) + ". " + text;
         }
 
-        void toLeft(string text, int tab, int colorCode, int number)
-        {
-            cout << color(colorCode);
-            
-            if(tab >= 1){
-                for(int i = 1; i <= tab; ++i){
-                    cout<<'\t';
-                }
-            }
+        cout<<text<<'\n'
+            <<defaultText();
+    }
 
-            if(number >= 1){
-                text = std::to_string(number) + ". " + text;
-            }
+    string Text::toLowerCase(string text)
+    {
+        transform(text.begin(), text.end(), text.begin(), ::tolower);
+        return text;
+    }
 
-            cout<<text<<'\n'
-                <<defaultText();
+    string Text::color(int textColor)
+    {
+        if((textColor >= 30 && textColor <= 37) || (textColor >= 90 && textColor <= 97)){
+            return "\033[" + std::to_string(textColor) + "m";
         }
+        return "";
+    }
 
-        string toLowerCase(string text)
-        {
-            transform(text.begin(), text.end(), text.begin(), ::tolower);
-            return text;
-        }
+    string Text::defaultText()
+    {
+        return "\033[0m";
+    }
 
-        string color(int textColor)
-        {
-            if((textColor >= 30 && textColor <= 37) || (textColor >= 90 && textColor <= 97)){
-                return "\033[" + std::to_string(textColor) + "m";
-            }
-            return "";
-        }
+    void Text::clearAll()
+    {
+        #ifdef _WIN32
+            system("cls");
+        #else
+            system("clear");
+        #endif
+    }
 
-        string defaultText()
-        {
-            return "\033[0m";
-        }
-
-        void clearAll()
-        {
-            #ifdef _WIN32
-                system("cls");
-            #else
-                system("clear");
-            #endif
-        }
-
-        void clearLine(int line)
-        {
-            cout<<"\033["<<line<<";1H";
-            cout<<"\033[J";
-        }
+    void Text::clearLine(int line)
+    {
+        cout<<"\033["<<line<<";1H";
+        cout<<"\033[J";
     }
 }
