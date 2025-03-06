@@ -19,16 +19,22 @@ By default, Windows CMD uses Code Page 437, which does not support special chara
 
 ### Temporary Method
 Run this command inside CMD before executing your program.
-'''chcp 65001'''
+```
+chcp 65001
+```
 
 ### Permanent Method
 #### Option 1: Registry Edit
 1. Open Run (Win + R), type regedit, and press Enter.
 2. Navigate to:
-'''HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage'''
-3. Find OEMCP, double-click it, and change its value to:
-'''65001'''
-4. Restart your computer.
+```
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage
+```
+4. Find OEMCP, double-click it, and change its value to:
+```
+65001
+```
+5. Restart your computer.
 
 #### Option 2: Windows Settings (Windows 10/11)
 1. Open Settings → Time & Language → Language & Region.
@@ -43,10 +49,14 @@ Run this command inside CMD before executing your program.
 
 ### Step 1: Enable Virtual Terminal Processing
 Run this command in CMD:
-'''reg add HKEY_CURRENT_USER\Console /v VirtualTerminalLevel /t REG_DWORD /d 1 /f'''
+```
+reg add HKEY_CURRENT_USER\Console /v VirtualTerminalLevel /t REG_DWORD /d 1 /f
+```
 * This enables ANSI escape sequences in CMD.
 * Restart CMD after executing this command.
 ### Using ANSI 256 Colors in CMD
 After enabling ANSI support, you can use ANSI escape sequences in your C++ program:
-'''std::cout << "\033[38;5;124m Red Text \033[0m\n"; // Foreground color (Red)
-std::cout << "\033[48;5;46m Green Background \033[0m\n"; // Background color (Green)'''
+```
+std::cout << "\033[38;5;124m Red Text \033[0m\n"; // Foreground color (Red)
+std::cout << "\033[48;5;46m Green Background \033[0m\n"; // Background color (Green)
+```
