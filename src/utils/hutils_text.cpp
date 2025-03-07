@@ -14,13 +14,6 @@ namespace hUtils {
 
     Text text;
 
-    std::string Text::toStr(double value, int precision)
-    {
-        std::ostringstream out;
-        out << std::fixed << std::setprecision(precision) << value;
-        return out.str();
-    }
-
     void Text::toLine(char character)
     {
         cout << string(SCREEN_WIDTH, character) << '\n';
@@ -32,20 +25,22 @@ namespace hUtils {
         int padding = (appliedScreenWidth - text.length()) / 2;
         if(padding < 0) padding = 0;
 
-        if(number >= 1){
+        if (number >= 1) {
             text = std::to_string(number) + ". " + text;
         }
-
-        cout << color(colorCode)
-                << std::setw(padding + text.length())<<text<<'\n'
-                << defaultText();
+    
+        std::cout << color(colorCode)
+                  << std::string(padding, ' ')
+                  << text
+                  << defaultText()
+                  << '\n';
     }
 
     void Text::toRight(string text, int colorCode)
     {
         cout << color(colorCode)
-                << std::setw(SCREEN_WIDTH)<<text<<'\n'
-                << defaultText();
+             << std::setw(SCREEN_WIDTH)<<text<<'\n'
+             << defaultText();
     }
 
     void Text::toLeft(string text, int tab, int colorCode, int number)

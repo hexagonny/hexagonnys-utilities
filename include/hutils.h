@@ -12,9 +12,9 @@
 #endif
 
 #include <string>
-#include <vector>
 #include <sstream>
 #include <regex>
+#include <iomanip>
 
 #ifndef HUTIL_API
 #define HUTIL_API
@@ -30,23 +30,33 @@ namespace hUtils {
     // --- TEXT UTILITIES ---
     struct Text {
     public:
-        HUTIL_API void toLine            (char character = '-');        //  Print a line of repeated characters
-        HUTIL_API void toCentered        (std::string text,             //  Prints centered text.
+        HUTIL_API void toLine            (char character = '-'); //  Print a line of repeated characters
+        HUTIL_API void toCentered        (std::string text,      //  Prints centered text.
                                           int colorCode = 0,
                                           int number = 0);      
-        HUTIL_API void toRight           (std::string text,             //  Moves text to the right.
+        HUTIL_API void toRight           (std::string text,      //  Moves text to the right.
                                           int colorCode = 0);  
-        HUTIL_API void toLeft            (std::string text,             //  Moves text to the left.
+        HUTIL_API void toLeft            (std::string text,      //  Moves text to the left.
                                           int tab = 0,
                                           int colorCode = 0,
                                           int number = 0);
-        HUTIL_API std::string toLowerCase(std::string text);            //  Convert string to lowercase.
-        HUTIL_API std::string toStr      (double value, int precision); //  Converts int and doubles to string.
+        HUTIL_API std::string toLowerCase(std::string text);     //  Convert string to lowercase.
+        template <typename T>
+        HUTIL_API std::string toString(const T& value,           //  Converts int and doubles to string.
+                                       int precision)
+        {
+            std::ostringstream oss;
+            if(precision >= 0 && std::is_floating_point<T>::value) {
+                oss << std::fixed << std::setprecision(precision);
+            }
+            oss << value;
+            return oss.str();
+        }
 
-        HUTIL_API std::string color      (int textColor = 0);           //  Get ANSI color codes.
-        HUTIL_API std::string defaultText();                            //  Reset text color.
-        HUTIL_API void clearAll          ();                            //  Clears every output in the terminal.
-        HUTIL_API void clearLine         (int line);                    //  Clears an assigned line and below it.
+        HUTIL_API std::string color      (int textColor = 0);    //  Get ANSI color codes.
+        HUTIL_API std::string defaultText();                     //  Reset text color.
+        HUTIL_API void clearAll          ();                     //  Clears every output in the terminal.
+        HUTIL_API void clearLine         (int line);             //  Clears an assigned line and below it.
     };
 
     struct Table {
@@ -57,15 +67,15 @@ namespace hUtils {
         {
             return std::regex_replace(text, std::regex("\033\\[[0-9;]*m"), "");
         }
-        int calculateMaxWidth() const;
-    
+
         template <typename T>
-        std::string toString(const T& value)
+        std::string toString (const T& value)
         {
             std::ostringstream oss;
             oss << value;
             return oss.str();
         }
+        int calculateMaxWidth() const;
     
     public:
         template <typename... Args>
@@ -75,20 +85,20 @@ namespace hUtils {
             (elements.push_back(toString(args)), ...);
         }
         HUTIL_API void toColumn   (std::string orientation = "left",
-                                    int givenWidth = 0,
-                                    int numberOfColumns = 2);
+                                   int givenWidth = 0,
+                                   int numberOfColumns = 2);
     };
     
     struct Bar {
     private:
         void printBar(double value,
                       double maxPoints,
-                      int filledColor = 124,
+                      int filledColor = 255,
                       int emptyColor  = 237);
     public:
         HUTIL_API void setBar  (double value,
                                 double maxPoints,
-                                int filledColor = 124,
+                                int filledColor = 255,
                                 int emptyColor  = 237);
     };
     

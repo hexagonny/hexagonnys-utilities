@@ -7,7 +7,8 @@ using namespace std;
 
 using namespace hUtils;
 
-    namespace hUtils {
+namespace hUtils {
+    
     Logger logger;
 
     void Logger::logAction(const string& message)

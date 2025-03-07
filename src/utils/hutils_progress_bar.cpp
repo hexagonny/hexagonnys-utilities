@@ -1,9 +1,9 @@
 #include "hutils.h"
 
 #include <iostream>
-#include <iomanip>
 #include <algorithm>
 
+#define SCREEN_WIDTH  50
 constexpr int BAR_LENGTH = 40;
 
 namespace hUtils {
@@ -14,23 +14,26 @@ namespace hUtils {
         double percentage = value / maxPoints;
         int filled = static_cast<int>(percentage * BAR_LENGTH);
         int empty = BAR_LENGTH - filled;
+        std::string bar;
 
-        std::cout << "\033[38;5;" + std::to_string(filledColor) + "m";
         for (int i = 0; i < filled; ++i) {
-            std::cout << "█";
+            bar.append("\033[38;5;" + std::to_string(filledColor) + "m█\033[0m");
         }
-        std::cout << "\033[0m";
-
-        std::cout << "\033[38;5;" + std::to_string(emptyColor) + "m";
         for (int i = 0; i < empty; ++i) {
-            std::cout << "▒";
+            bar.append("\033[38;5;" + std::to_string(emptyColor) + "m▒\033[0m");
         }
-        std::cout << "\033[0m";
+        
+        int appliedScreenWidth = SCREEN_WIDTH;
+        int padding = (appliedScreenWidth - BAR_LENGTH) / 2;
+        if (padding < 0) padding = 0;
 
-        std::cout << "\n";
-        std::cout << std::fixed << std::setprecision(1);
-        hUtils::text.toCentered(hUtils::text.toStr(percentage * 100, 1) + "/100.0 % ("
-                                + hUtils::text.toStr(value, 1) + "/" + hUtils::text.toStr(value, 1) + ")\n");
+        std::cout << std::string(padding, ' ') << bar << '\n';
+
+        std::string percentageString = hUtils::text.toString(percentage * 100, 1) + "/100.0 % (" +
+                                       hUtils::text.toString(value, 1) + "/" +
+                                       hUtils::text.toString(maxPoints, 1) + ")";
+
+        hUtils::text.toCentered(percentageString);
     }
 
     void Bar::setBar(double value, double maxPoints, int filledColor, int emptyColor)

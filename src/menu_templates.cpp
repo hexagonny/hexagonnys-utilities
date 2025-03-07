@@ -144,7 +144,7 @@ void progressBar(bool increasing){
             progress -= step;
             if (progress <= 0) {
                 text.clearAll();
-                bar.setBar(0, maxPoints);
+                bar.setBar(0, maxPoints, 124);
                 break;
             }
         } else {
@@ -152,7 +152,7 @@ void progressBar(bool increasing){
             progress += step;
             if (progress >= maxPoints) {
                 text.clearAll();
-                bar.setBar(maxPoints, maxPoints);
+                bar.setBar(maxPoints, maxPoints, 112);
                 break;
             }
         }
