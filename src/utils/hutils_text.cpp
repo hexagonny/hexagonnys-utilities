@@ -48,8 +48,8 @@ namespace hUtils {
             text = std::to_string(number) + ". " + text;
         }
 
-        cout<< text << '\n'
-            << defaultText();
+        cout << text << '\n'
+             << defaultText();
     }
 
     string Text::toLowerCase(string text)
@@ -60,17 +60,19 @@ namespace hUtils {
 
     string Text::color(int textColor, bool use256)
     {
-        if(!use256){
-            if((textColor >= 30 && textColor <= 37) || (textColor >= 90 && textColor <= 97)){
+        if(use256){
+            // 256-color mode (0-255)
+            if (textColor >= 0 && textColor <= 255){
+                return "\033[38;5;" + std::to_string(textColor) + "m";
+            }
+        } 
+        else{
+            // Standard ANSI 16 colors
+            if ((textColor >= 30 && textColor <= 37) || (textColor >= 90 && textColor <= 97)){
                 return "\033[" + std::to_string(textColor) + "m";
             }
         }
-        else
-        {
-            if(textColor >= 0 && textColor <= 255){
-                return "\033[38;5;" + std::to_string(textColor) + "m";
-            }
-        }
+    
         return "";
     }
 
@@ -81,17 +83,23 @@ namespace hUtils {
 
     void Text::clearAll()
     {
-        #ifdef _WIN32
-            system("cls");
-        #else
-            system("clear");
-        #endif
+#ifdef _WIN32
+    if(std::getenv("TERM")){ 
+        // Use ANSI escape codes if the terminal supports it
+        std::cout << "\033[2J\033[H" << std::flush;
+    }
+    else{
+        system("cls");
+    }
+#else
+    std::cout << "\033[2J\033[H" << std::flush;
+#endif
     }
 
     void Text::clearBelow(int line)
     {
-        cout<<"\033["<<line<<";1H";
-        cout<<"\033[J";
+        cout << "\033[" << line << ";1H";
+        cout << "\033[J";
     }
 
     void Text::clearAbove(int line) {
