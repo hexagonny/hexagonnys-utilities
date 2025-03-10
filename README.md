@@ -47,7 +47,7 @@ HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Nls\CodePage
 
 ## Enabling ANSI 256 Colors in CMD
 
-### Step 1: Enable Virtual Terminal Processing
+### Enable Virtual Terminal Processing
 Run this command in CMD:
 ```
 reg add HKEY_CURRENT_USER\Console /v VirtualTerminalLevel /t REG_DWORD /d 1 /f
@@ -60,3 +60,31 @@ After enabling ANSI support, you can use ANSI escape sequences in your C++ progr
 std::cout << "\033[38;5;124m Red Text \033[0m\n"; // Foreground color (Red)
 std::cout << "\033[48;5;46m Green Background \033[0m\n"; // Background color (Green)
 ```
+
+***
+
+### Verifying UTF-8 and ANSI Support
+After setting up:
+* Check UTF-8:
+  ```
+  chcp
+  ```
+  * If it returns 65001, UTF-8 is enabled.
+* Check ANSI Colors:
+  Try running this C++ snippet:
+  ```
+  #include <iostream>
+
+  int main() {
+      std::cout << "\033[38;5;124mRed Text\033[0m" << std::endl;
+      std::cout << "\033[48;5;46mGreen Background\033[0m" << std::endl;
+      return 0;
+  }
+  ```
+  If you see colored text, ANSI colors are working.
+
+***
+
+## Final Notes
+* Windows Terminal (from Microsoft Store) has built-in UTF-8 and ANSI support.
+* Always test your settings with chcp and ANSI color codes before running your program.
