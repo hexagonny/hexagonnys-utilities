@@ -4,7 +4,6 @@
 #include <iomanip>
 
 using namespace std;
-
 using namespace hUtils;
 
 namespace hUtils {

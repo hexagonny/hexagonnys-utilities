@@ -1,8 +1,6 @@
 #ifndef HUTILS_H
 #define HUTILS_H
 
-#pragma once
-
 #ifdef _WIN32
     #include <windows.h>
 #else
@@ -20,6 +18,9 @@
 #define HUTIL_API
 #endif  
 
+constexpr int SCREEN_WIDTH  = 50;
+constexpr int SCREEN_HEIGHT = 30;
+
 namespace hUtils {
 
     // --- SYSTEM UTILITIES ---
@@ -33,13 +34,15 @@ namespace hUtils {
         HUTIL_API void toLine            (char character = '-'); //  Print a line of repeated characters
         HUTIL_API void toCentered        (std::string text,      //  Prints centered text.
                                           int colorCode = 0,
-                                          int number = 0);      
+                                          int number = 0,
+                                          bool use256 = false);      
         HUTIL_API void toRight           (std::string text,      //  Moves text to the right.
-                                          int colorCode = 0);  
-        HUTIL_API void toLeft            (std::string text,      //  Moves text to the left.
-                                          int tab = 0,
                                           int colorCode = 0,
-                                          int number = 0);
+                                          bool use256 = false);  
+        HUTIL_API void toLeft            (std::string text,      //  Moves text to the left.
+                                          int colorCode = 0,
+                                          int number = 0,
+                                          bool use256 = false);
         HUTIL_API std::string toLowerCase(std::string text);     //  Convert string to lowercase.
         template <typename T>
         HUTIL_API std::string toString(const T& value,           //  Converts int and doubles to string.
@@ -53,10 +56,13 @@ namespace hUtils {
             return oss.str();
         }
 
-        HUTIL_API std::string color      (int textColor = 0);    //  Get ANSI color codes.
+        HUTIL_API std::string color      (int textColor = 0,     //  Get ANSI color codes.
+                                          bool use256 = false);
         HUTIL_API std::string defaultText();                     //  Reset text color.
+
         HUTIL_API void clearAll          ();                     //  Clears every output in the terminal.
-        HUTIL_API void clearLine         (int line);             //  Clears an assigned line and below it.
+        HUTIL_API void clearBelow        (int line);             //  Clears an assigned line below it.
+        HUTIL_API void clearAbove        (int line);             //  Clears an assigned line above it.
     };
 
     struct Table {
@@ -98,7 +104,7 @@ namespace hUtils {
     public:
         HUTIL_API void setBar  (double value,
                                 double maxPoints,
-                                int filledColor = 255,
+                                int filledColor = 252,
                                 int emptyColor  = 237);
     };
     
