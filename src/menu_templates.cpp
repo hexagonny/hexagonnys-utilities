@@ -32,7 +32,7 @@ void itemListMenu(){
     text.toLine();
     text.toCentered("Inventory", 93);
     for(int i = 0; i < player.items.size(); i++){
-        text.toLeft(player.items[i], {}, {}, i + 1);
+        text.toLeft(player.items[i], {}, i + 1);
     }
     text.toLine();
 }
@@ -56,7 +56,7 @@ void itemPaginatedMenu(){
         int end_index = (start_index + PAGE_LIMIT < totalItems) ? (start_index + PAGE_LIMIT) : totalItems;
 
         for (int i = start_index; i < end_index; i++) {
-            text.toLeft(player.items[i], {}, {}, i + 1);
+            text.toLeft(player.items[i], {}, i + 1);
         }
 
         std::cout<<'\n';
@@ -111,7 +111,7 @@ void nestedMenus(){
 }
 
 void tableMenu(){
-    text.toLeft("   Character Skill Sheet:", {}, 93);
+    text.toLeft("   Character Skill Sheet:", 93);
     text.toLine();
     table.setElements(
         "Spells", "Skills", "Status",
